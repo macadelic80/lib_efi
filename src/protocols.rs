@@ -42,6 +42,7 @@ pub mod shell;
 pub mod shell_dynamic_command;
 pub mod shell_parameters;
 pub mod simple_file_system;
+pub mod simple_pointer;
 pub mod simple_network;
 pub mod simple_text_input;
 pub mod simple_text_input_ex;
