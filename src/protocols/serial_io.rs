@@ -105,6 +105,7 @@ pub type Read = eficall! {fn(
 
 #[repr(C)]
 pub struct Protocol {
+    pub revision: u32,
     pub reset: Reset,
     pub set_attribute: SetAttribute,
     pub set_control: SetControl,
