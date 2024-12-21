@@ -40,15 +40,16 @@ pub struct Mode {
 #[derive(Clone, Copy, Debug, Default)]
 #[repr(C)]
 pub struct State {
-    pub current_x: u64,
-    pub current_y: u64,
-    pub current_z: u64,
-    pub active_buttons: u32,
+    pub relative_movement_x: u32,
+    pub relative_movement_y: u32,
+    pub relative_movement_z: u32,
+    pub left_button: crate::base::Boolean,
+    pub right_button: crate::base::Boolean,
 }
 
 pub type Reset = eficall! {fn(
     this: *mut Protocol,
-    extended_verification: bool,
+    extended_verification: crate::base::Boolean,
 ) -> crate::base::Status};
 
 pub type GetState = eficall! {fn(
