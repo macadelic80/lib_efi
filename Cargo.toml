@@ -38,15 +38,3 @@ examples = ['native']
 # these from normal runs.
 native = []
 rustc-dep-of-std = ['compiler_builtins/rustc-dep-of-std', 'core']
-
-[[example]]
-name = "freestanding"
-required-features = ["native"]
-
-[[example]]
-name = "gop-query"
-required-features = ["native"]
-
-[[example]]
-name = "hello-world"
-required-features = ["native"]

@@ -55,31 +55,57 @@ pub struct IoToken {
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
+///The EFI_FILE_INFO data structure supports EFI_FILE_PROTOCOL.GetInfo() and EFI_FILE_PROTOCOL.SetInfo() requests. In the case of SetInfo(), the following additional rules apply:
+
+///On directories, the file size is determined by the contents of the directory and cannot be changed by setting FileSize. On directories, FileSize is ignored during a SetInfo().
+
+///The PhysicalSize is determined by the FileSize and cannot be changed. This value is ignored during a SetInfo() request.
+
+///The EFI_FILE_DIRECTORY attribute bit cannot be changed. It must match the file’s actual type.
+
+///A value of zero in CreateTime, LastAccess, or ModificationTime causes the fields to be ignored (and not updated).
 pub struct Info<const N: usize = 0> {
+    ///Size of the EFI_FILE_INFO structure, including the Null-terminated FileName string.
     pub size: u64,
+    ///The size of the file in bytes.
     pub file_size: u64,
+    ///The amount of physical space the file consumes on the file system volume.
     pub physical_size: u64,
+    ///The time the file was created.
     pub create_time: crate::system::Time,
+    ///The time when the file was last accessed.
     pub last_access_time: crate::system::Time,
+    ///The time when the file’s contents were last modified.
     pub modification_time: crate::system::Time,
+    ///The attribute bits for the file.
     pub attribute: u64,
+    ///The Null-terminated name of the file. For a root directory, the name is an empty string.
     pub file_name: [crate::base::Char16; N],
 }
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
+///The EFI_FILE_SYSTEM_INFO data structure is an information structure that can be obtained on the root directory file handle. The root directory file handle is the file handle first obtained on the initial call to the EFI_BOOT_SERVICES.HandleProtocol() function to open the file system interface. All of the fields are read-only except for VolumeLabel. The system volume’s VolumeLabel can be created or modified by calling EFI_FILE_PROTOCOL.SetInfo() with an updated VolumeLabel field.
 pub struct SystemInfo<const N: usize = 0> {
+    ///Size of the EFI_FILE_SYSTEM_INFO structure, including he Null-terminated VolumeLabel string.
     pub size: u64,
+    ///TRUE if the volume only supports read access.
     pub read_only: crate::base::Boolean,
+    ///The number of bytes managed by the file system.
     pub volume_size: u64,
+    ///The number of available bytes for use by the file system.
     pub free_space: u64,
+    ///The nominal block size by which files are typically grown.
     pub block_size: u32,
+    ///The Null-terminated string that is the volume’s label.
     pub volume_label: [crate::base::Char16; N],
 }
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
+///The EFI_FILE_SYSTEM_VOLUME_LABEL data structure is an information structure that can be obtained on the root directory file handle. The root directory file handle is the file handle first obtained on the initial call to the EFI_BOOT_SERVICES.HandleProtocol() function to open the file system interface. The system volume’s VolumeLabel can be created or modified by calling EFI_FILE_PROTOCOL.SetInfo() with an updated VolumeLabel field.
 pub struct SystemVolumeLabel<const N: usize = 0> {
+    ///The Null-terminated string that is the volume’s label.
     pub volume_label: [crate::base::Char16; N],
 }
 
